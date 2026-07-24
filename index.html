@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TejeMath 🧶 | Calculadora Experta de Tejido a Palitos y Crochet</title>
+    <meta name="description" content="Calculadora profesional de puntos, vueltas y muestras de tensión para tejido a palitos (dos agujas) y crochet. Ajuste por holgura, múltiplos de puntada y lana requerida.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-cozy">
+    <div class="background-decor">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="brand-icon">🧶</span>
+                <div>
+                    <h1>TejeMath</h1>
+                    <p class="subtitle">Calculadora Experta de Muestra y Puntos de Tejido</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="themeToggle" class="btn-icon" aria-label="Cambiar tema">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Craft & Preset Selector -->
+        <section class="card craft-selector-card">
+            <div class="craft-toggle-group">
+                <button class="craft-btn active" data-craft="palitos">
+                    <span class="btn-emoji">🥢</span>
+                    <span>Dos Agujas / Palitos</span>
+                </button>
+                <button class="craft-btn" data-craft="crochet">
+                    <span class="btn-emoji">🪡</span>
+                    <span>Crochet / Ganchillo</span>
+                </button>
+            </div>
+
+            <div class="yarn-presets-wrapper">
+                <label for="yarnPreset" class="preset-label">
+                    <span>⚡ Presets de Hilado Frecuentes:</span>
+                </label>
+                <select id="yarnPreset" class="select-input">
+                    <option value="custom">-- Personalizado --</option>
+                    <option value="fingering">Fingering / Sock (28-32 pts / 10 cm - Aguja 2.25 - 3.25mm)</option>
+                    <option value="sport">Sport / Baby (24-26 pts / 10 cm - Aguja 3.25 - 3.75mm)</option>
+                    <option value="dk">DK / Light Worsted (21-24 pts / 10 cm - Aguja 3.75 - 4.5mm)</option>
+                    <option value="worsted">Worsted / Aran (16-20 pts / 10 cm - Aguja 4.5 - 5.5mm)</option>
+                    <option value="chunky">Bulky / Chunky (12-15 pts / 10 cm - Aguja 6.0 - 8.0mm)</option>
+                    <option value="superchunky">Super Bulky (7-11 pts / 10 cm - Aguja 9.0mm+)</option>
+                </select>
+            </div>
+        </section>
+
+        <div class="calculator-grid">
+            <!-- Left Column: Inputs -->
+            <div class="input-column">
+                <!-- Step 1: Gauge Sample -->
+                <section class="card input-card">
+                    <div class="card-header">
+                        <span class="step-badge">1</span>
+                        <h2>Muestra de Tensión (Gauge)</h2>
+                    </div>
+                    <p class="card-description">Mide tu muestra bloqueada sin estirar excesivamente.</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="sampleWidth">Ancho Muestra (cm)</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="sampleWidth" value="10" min="1" step="0.5" placeholder="10">
+                                <span class="unit">cm</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sampleStitches">Puntos Contados</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="sampleStitches" value="20" min="1" step="1" placeholder="20">
+                                <span class="unit">pts</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sampleHeight">Alto Muestra (cm)</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="sampleHeight" value="10" min="1" step="0.5" placeholder="10">
+                                <span class="unit">cm</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sampleRows">Vueltas / Hileras</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="sampleRows" value="26" min="1" step="1" placeholder="26">
+                                <span class="unit">vts</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="sampleWeight">Peso Muestra (Opcional - para estimar lana)</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="sampleWeight" value="" min="0" step="0.1" placeholder="Ej. 4.5">
+                                <span class="unit">gramos</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 2: Target Project & Ease -->
+                <section class="card input-card">
+                    <div class="card-header">
+                        <span class="step-badge">2</span>
+                        <h2>Medidas de Tu Proyecto</h2>
+                    </div>
+                    <p class="card-description">Las dimensiones finales que deseas que tenga tu pieza tejida.</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="targetWidth">Ancho Deseado (cm)</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="targetWidth" value="50" min="1" step="0.5" placeholder="50">
+                                <span class="unit">cm</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="targetHeight">Alto Deseado (cm)</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="targetHeight" value="60" min="1" step="0.5" placeholder="60">
+                                <span class="unit">cm</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="easeSelect">Tipo de Holgura (Ease)</label>
+                            <select id="easeSelect" class="select-input">
+                                <option value="exact">Estándar / Medida Exacta (0 cm)</option>
+                                <option value="fitted">Ceñido / Ajustado (-3 cm)</option>
+                                <option value="relaxed" selected>Relajado (+5 cm)</option>
+                                <option value="oversize">Oversize (+12 cm)</option>
+                                <option value="custom">Personalizada (+/- cm)...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width hidden" id="customEaseGroup">
+                            <label for="customEase">Holgura Personalizada (cm)</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="customEase" value="0" step="0.5" placeholder="Ej. 4 o -2">
+                                <span class="unit">cm</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 3: Pattern Repeats & Multiples -->
+                <section class="card input-card">
+                    <div class="card-header">
+                        <span class="step-badge">3</span>
+                        <h2>Múltiplo de Puntada / Elásticos</h2>
+                    </div>
+                    <p class="card-description">Ajusta el número de puntos para que tu diseño o pretina encaje perfectamente.</p>
+
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="patternPreset">Tipo de Puntada / Múltiplo</label>
+                            <select id="patternPreset" class="select-input">
+                                <option value="none">Sin múltiplo (Puntada jersey / Santa Clara / Básico)</option>
+                                <option value="rib1x1">Elástico 1x1 (Múltiplo de 2)</option>
+                                <option value="rib2x2">Elástico 2x2 (Múltiplo de 4)</option>
+                                <option value="rib2x2edge">Elástico 2x2 Simétrico (Múltiplo de 4 + 2)</option>
+                                <option value="custom">Múltiplo Personalizado (M x N + Borde)...</option>
+                            </select>
+                        </div>
+
+                        <div id="customPatternInputs" class="full-width form-grid hidden">
+                            <div class="form-group">
+                                <label for="multipleValue">Múltiplo de</label>
+                                <div class="input-with-unit">
+                                    <input type="number" id="multipleValue" value="6" min="1" step="1">
+                                    <span class="unit">pts</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edgeStitches">Puntos de Borde / Extra</label>
+                                <div class="input-with-unit">
+                                    <input type="number" id="edgeStitches" value="2" min="0" step="1">
+                                    <span class="unit">pts</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Results & Interactive Visualization -->
+            <div class="results-column">
+                <section class="card results-card highlight-card">
+                    <div class="card-header">
+                        <span class="icon-sparkle">✨</span>
+                        <h2>Resultado del Cálculo</h2>
+                    </div>
+
+                    <div class="hero-result">
+                        <div class="result-number-container">
+                            <span id="finalStitchesCount" class="hero-number">100</span>
+                            <span class="hero-label">PUNTOS A MONTAR</span>
+                        </div>
+                        <div class="result-badge" id="multipleAdjustmentNotice">
+                            Exacto según tensión y holgura
+                        </div>
+                    </div>
+
+                    <div class="secondary-results-grid">
+                        <div class="sec-result-item">
+                            <span class="sec-icon">📐</span>
+                            <div class="sec-details">
+                                <span class="sec-value" id="finalRowsCount">156</span>
+                                <span class="sec-label">Vueltas / Hileras</span>
+                            </div>
+                        </div>
+
+                        <div class="sec-result-item">
+                            <span class="sec-icon">📏</span>
+                            <div class="sec-details">
+                                <span class="sec-value" id="effectiveWidthDisplay">55 cm</span>
+                                <span class="sec-label">Ancho Efectivo (con Holgura)</span>
+                            </div>
+                        </div>
+
+                        <div class="sec-result-item">
+                            <span class="sec-icon">📊</span>
+                            <div class="sec-details">
+                                <span class="sec-value" id="gaugeDensity">2.0 pts/cm | 2.6 vts/cm</span>
+                                <span class="sec-label">Densidad de Muestra</span>
+                            </div>
+                        </div>
+
+                        <div class="sec-result-item">
+                            <span class="sec-icon">⚖️</span>
+                            <div class="sec-details">
+                                <span class="sec-value" id="estimatedWeight">--</span>
+                                <span class="sec-label">Estimación de Lana</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Fabric Grid Simulation -->
+                    <div class="fabric-preview-box">
+                        <h3>Simulación de la Muestra vs Proyecto</h3>
+                        <div class="fabric-canvas-container">
+                            <svg id="fabricSvg" viewBox="0 0 400 180" class="fabric-svg">
+                                <!-- Dynamic SVG generated via JS -->
+                            </svg>
+                        </div>
+                        <p class="canvas-caption" id="canvasCaption">Vista proporcional de la muestra y el tejido final</p>
+                    </div>
+
+                    <div class="actions-group">
+                        <button id="copyRecipeBtn" class="btn btn-primary">
+                            <span>📋 Copiar Ficha Técnica</span>
+                        </button>
+                        <button id="printRecipeBtn" class="btn btn-secondary">
+                            <span>🖨️ Imprimir / PDF</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Helpful Tips for Knitters -->
+                <section class="card tips-card">
+                    <h3>💡 Consejos de Tejedora Experta</h3>
+                    <ul class="tips-list">
+                        <li><strong>¡Bloquea tu muestra!</strong> El vapor o lavado puede estirar o encoger la lana considerablemente. Medir la muestra seca y lavada evita sorpresas.</li>
+                        <li><strong>Dos Agujas vs Crochet:</strong> El crochet suele consumir entre un 20% y 30% más lana y ser ligeramente más denso que el tejido a dos agujas.</li>
+                        <li><strong>Pretinas y Elásticos:</strong> Si estás tejiendo pretinas de suéter en elástico (1x1 o 2x2), se suele usar una aguja 0.5 mm a 1 mm más delgada que el cuerpo.</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>TejeMath 🧶 — Diseñado para amantes del tejido manual a palitos y crochet. Hecho con ❤️ y precisión matemática.</p>
+    </footer>
+
+    <!-- Toast notification container -->
+    <div id="toast" class="toast hidden">Ficha técnica copiada al portapapeles 🧶</div>
+
+    <script src="app.js"></script>
+</body>
+</html>
